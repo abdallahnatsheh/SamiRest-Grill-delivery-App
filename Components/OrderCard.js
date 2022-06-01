@@ -152,19 +152,20 @@ const OrderCard = ({ orderItem, dataUser }) => {
               <TextIconButton
                 containerStyle={{
                   ...styles.textButtonContainer,
-                  backgroundColor: COLORS.primary,
+                  backgroundColor: COLORS.transparentPrimary9,
+                  marginLeft: SIZES.radius,
                 }}
-                icon={icons.map}
+                icon={icons.call}
                 iconPosition="RIGHT"
-                iconStyle={{ tintColor: COLORS.white }}
-                label="تتبع الطلب"
+                iconStyle={{ tintColor: COLORS.primary }}
+                label="اتصل بالمطعم"
                 labelStyle={{
-                  color: COLORS.white,
                   ...FONTS.body4,
+                  color: COLORS.primary,
                 }}
-                onPress={() =>
-                  navigation.navigate("Map", { dataUser: dataUser })
-                }
+                onPress={() => {
+                  utils.dialCall(parseInt("026200870"));
+                }}
               />
 
               <TextButton
