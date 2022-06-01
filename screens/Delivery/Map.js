@@ -40,7 +40,7 @@ const Map = ({ navigation, route }) => {
   //map refrence for settings
   const mapView = React.useRef();
   //worker data
-  const { currentUser, dataUser } = useAuth();
+  const { dataUser } = useAuth();
   //region of the map
   const [region, setRegion] = React.useState(null);
   //destination means customer data
@@ -126,6 +126,7 @@ const Map = ({ navigation, route }) => {
     setRegion(initialRegion);
     //setFromLoc(dummyData.fromLocs[1]);
     try {
+      console.log("dataCustomer", dataCustomer);
       let result = await Location.geocodeAsync(
         dataCustomer.firstAddress + "," + dataCustomer?.secondAddress
       );
@@ -237,6 +238,8 @@ const Map = ({ navigation, route }) => {
           .then(() => {
             dataUser.isDelivering = false;
             dataUser.orderDeliverNow = "";
+            stopForegroundUpdate();
+            stopBackgroundUpdate();
             navigation.replace("Home");
           })
           .catch((error) => {
