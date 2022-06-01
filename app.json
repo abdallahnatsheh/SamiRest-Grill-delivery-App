@@ -1,0 +1,55 @@
+{
+  "expo": {
+    "name": "samiRestGrill-delivery",
+    "slug": "samiRestGrill-deliver-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon/drawable-xxxhdpi/icon.png",
+    "splash": {
+      "image": "./assets/images/splash/android/drawable-xxxhdpi/screen.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "The app accesses your photos to let you choose your personal profile picture."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/playstore.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "versionCode": 1,
+      "permissions": [
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_BACKGROUND_LOCATION"
+      ],
+      "package": "com.abdallahna.samiRestGrilldelivery",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyC-xrngxDoq1VuKpqkinK46qoG9EG4-WpA"
+        }
+      }
+    },
+    "web": {
+      "favicon": "./assets/playstore.png"
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you choose your personal profile picture."
+        }
+      ]
+    ]
+  }
+}
