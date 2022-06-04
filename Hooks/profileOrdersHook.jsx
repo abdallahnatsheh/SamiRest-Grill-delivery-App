@@ -3,7 +3,7 @@ import { db } from "../Firebase/firebase.Config";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { useAuth } from "../context/AuthContext";
 /*
-custom hook used to get orders of specific user
+custom hook used to get delivery  orders of today's date 
 e
 */
 export const useProfileOrdersHook = () => {
@@ -18,7 +18,6 @@ export const useProfileOrdersHook = () => {
       (snapshot) => {
         setDocuments(
           snapshot.docs.map((document) => {
-
             let temp = {
               id: document.id,
               date: document.data().orderDate,
@@ -29,6 +28,7 @@ export const useProfileOrdersHook = () => {
               notes: document.data().notes,
               userData: document.data().dataUser,
               orderType: document.data().orderType,
+              shippingFee: document.data().shippingFee,
             };
             const updatedItemIndex = updatedOrder.findIndex(
               (item) => item.id === temp.id

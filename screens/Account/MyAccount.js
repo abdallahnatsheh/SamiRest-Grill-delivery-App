@@ -5,7 +5,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { Header, IconBotton, TextButton, InfoItem } from "../../Components";
 import { COLORS, SIZES, icons, dummyData, FONTS } from "../../constants";
 import { useAuth } from "../../context/AuthContext";
-
+// show accound information
 const MyAccount = ({ navigation }) => {
   const { currentUser, dataUser } = useAuth();
   function renderHeader() {

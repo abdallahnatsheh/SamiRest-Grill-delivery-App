@@ -10,7 +10,7 @@ import {
 } from "../../Components";
 import { COLORS, SIZES, icons } from "../../constants";
 import { useAuth } from "../../context/AuthContext";
-
+//settings menu
 const Settings = () => {
   const navigation = useNavigation();
   const { logout } = useAuth();

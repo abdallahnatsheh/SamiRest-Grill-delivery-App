@@ -1,35 +1,22 @@
-import { LinearGradient } from "expo-linear-gradient";
-import { doc, updateDoc, getDoc } from "firebase/firestore";
-import React, { useState, useEffect } from "react";
-import { View, Text, Image, Alert, ActivityIndicator } from "react-native";
+import { doc, updateDoc } from "firebase/firestore";
+import React from "react";
+import { View, Text, Alert } from "react-native";
 import {
   FlatList,
   ScrollView,
   TouchableOpacity,
 } from "react-native-gesture-handler";
-import {
-  Header,
-  TextButton,
-  LineDivider,
-  FormInput,
-  IconBotton,
-} from "../../Components";
-import {
-  FONTS,
-  COLORS,
-  SIZES,
-  icons,
-  constants,
-  dummyData,
-} from "../../constants";
+import { Header, TextButton, IconBotton } from "../../Components";
+import { FONTS, COLORS, SIZES, icons } from "../../constants";
 import { useAuth } from "../../context/AuthContext";
 import { utils } from "../../utils";
 import { db } from "../../Firebase/firebase.Config";
+// this component draw order list for today only
 
 const OrderList = ({ navigation, route }) => {
   const { orderItem } = route.params;
-  console.log("orderItem", orderItem.status);
   const { currentUser } = useAuth();
+  // this is the header contain name of the page and buttons in this situation a button to go to pervious page
   function renderHeader() {
     return (
       <Header
@@ -62,9 +49,8 @@ const OrderList = ({ navigation, route }) => {
       />
     );
   }
-
-  function specialOrderDetails() {
-    console.log(orderItem.id);
+  //this draw customer info like name and phone ...
+  function customerInfo() {
     return (
       <ScrollView>
         <View
@@ -139,7 +125,7 @@ const OrderList = ({ navigation, route }) => {
           }}
         >
           <Text style={{ color: COLORS.darkGray, ...FONTS.body3 }}>
-            {orderItem.totalPrice}₪
+            {item.totalPrice}₪
           </Text>
           <View>
             <Text style={{ ...FONTS.h3 }}>{item.name}</Text>
@@ -189,7 +175,36 @@ const OrderList = ({ navigation, route }) => {
   function renderFooter() {
     return (
       <View style={{ marginTop: SIZES.radius, marginBottom: SIZES.padding }}>
-        {specialOrderDetails()}
+        {orderItem.shippingFee && (
+          <View
+            style={{
+              marginTop: SIZES.padding,
+              paddingVertical: SIZES.padding,
+              borderRadius: SIZES.radius,
+              borderWidth: 2,
+              borderColor: COLORS.lightGray2,
+              backgroundColor: COLORS.white,
+            }}
+          >
+            {/*TRACK ORDER AND ORDER ID */}
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                paddingHorizontal: SIZES.padding,
+              }}
+            >
+              <Text style={{ color: COLORS.darkGray, ...FONTS.body3 }}>
+                {orderItem.shippingFee}₪
+              </Text>
+              <View>
+                <Text style={{ ...FONTS.h3 }}> التوصيل</Text>
+              </View>
+            </View>
+          </View>
+        )}
+        {customerInfo()}
         <TextButton
           buttonContainerStyle={{ height: 55, borderRadius: SIZES.base }}
           label="تم"

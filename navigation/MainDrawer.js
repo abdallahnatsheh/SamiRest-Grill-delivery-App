@@ -8,7 +8,7 @@ import { COLORS, FONTS, SIZES, constants, icons, images } from "../constants";
 import { MainLayout } from "../screens";
 import { useAuth } from "../context/AuthContext";
 const Drawer = createDrawerNavigator();
-
+//drawer component navigation that contains the side drawer
 const CustomDrawerItem = ({ label, icon, onPress }) => {
   return (
     <TouchableOpacity

@@ -40,9 +40,10 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db, storage } from "../../Firebase/firebase.Config";
+//edit and update accound information
 const MyAccountEdit = ({ navigation }) => {
   const { currentUser, dataUser } = useAuth();
-
+//input errors states
   const [firstNameError, setFirstNameError] = useState("");
   const [lastNameError, setLastNameError] = useState("");
   const [phoneNoError, setPhoneNoError] = useState("");
@@ -52,6 +53,7 @@ const MyAccountEdit = ({ navigation }) => {
   const [secondAddressError, setSecondAddressError] = useState("");
   //isSubmitting check
   const [isSubmitting, setIsSubmitting] = React.useState(false);
+  //pick image and upload it to storage
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -92,6 +94,7 @@ const MyAccountEdit = ({ navigation }) => {
         });
     }
   };
+  //check if all fields are validated
   function isVerythingOk(
     firstName,
     lastName,

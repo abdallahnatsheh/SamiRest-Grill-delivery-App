@@ -14,6 +14,8 @@ import { COLORS, SIZES, FONTS, icons, dummyData } from "../../constants";
 import { useAuth } from "../../context/AuthContext";
 import { useProfileOrdersHook } from "../../Hooks/profileOrdersHook";
 import { db } from "../../Firebase/firebase.Config";
+import axios from "axios";
+
 const Home = ({ navigation }) => {
   //import the data of the user
   const { currentUser, dataUser } = useAuth();
@@ -21,6 +23,9 @@ const Home = ({ navigation }) => {
   const [ordersList, length] = useProfileOrdersHook();
   //this state contains order list of today date
   const [filteredOrder, setFilteredOrder] = useState([]);
+  //get today date and time
+  const [today, setToday] = React.useState("");
+
   //here this hook will filter the order list for deliver order only that have today's date
   //but the worker want a previous order he can write the id of it in the search bar
   useEffect(async () => {
@@ -36,23 +41,33 @@ const Home = ({ navigation }) => {
       setFilteredOrder(bookorderlistmaker());
     }
   }, [ordersList, length, currentUser, dataUser]);
-
+  //get currnet israel time from external api
+  React.useEffect(() => {
+    function getCurrentTime() {
+      axios
+        .get(`http://worldtimeapi.org/api/timezone/Asia/Jerusalem`)
+        .then((res) => {
+          setToday(new Date(JSON.stringify(res.data.datetime).slice(1, -1)));
+        });
+    }
+    getCurrentTime();
+  }, []);
   //filter order list to the deliver type of orders
   //works by getting today's date and then filter the result by type
   //and then filter it by date
   function bookorderlistmaker() {
     if (ordersList.length > 0) {
-      const today = new Date();
       const date =
         today.getFullYear() +
-        "-" +
+        "-0" +
         (today.getMonth() + 1) +
-        "-" +
+        "-0" +
         today.getDate();
 
       let tempList = ordersList.filter((item) => item.orderType == "deliver");
       tempList = tempList.filter((item) => item.status == "قيد الطبخ");
       tempList = tempList.filter((item) => item.date == date);
+      console.log(date);
       console.log(tempList.length);
       return tempList;
     }

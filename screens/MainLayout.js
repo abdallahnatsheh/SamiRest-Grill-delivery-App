@@ -19,7 +19,7 @@ import {
 import { Header } from "../Components";
 import { LinearGradient } from "expo-linear-gradient";
 import { useAuth } from "../context/AuthContext";
-
+//this component contains main page with tab buttons and drawer menu
 const TabButton = ({ label, icons, onPress }) => {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
