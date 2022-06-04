@@ -6,7 +6,7 @@ import { FormInput, TextButton } from "../../Components";
 import { useAuth } from "../../context/AuthContext";
 import { Formik } from "formik";
 import Recaptcha from "react-native-recaptcha-that-works";
-
+//sign in component with email and password and capatcha to stop automatic logins like bruteforce or dictionary attack
 const SignIn = ({ navigation }) => {
   const { login, currentUser } = useAuth();
   //email vallidations errors

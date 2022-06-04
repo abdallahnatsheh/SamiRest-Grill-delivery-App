@@ -73,7 +73,7 @@ const Map = ({ navigation, route }) => {
       AppState.remove("change", _handleAppStateChange);
     };
   }, []);
-
+  //this function used to start live tracking if in foreground or background status
   const _handleAppStateChange = (nextAppState) => {
     if (
       appState.current.match(/inactive|background/) &&
@@ -124,13 +124,11 @@ const Map = ({ navigation, route }) => {
       longitudeDelta: 0.02,
     };
     setRegion(initialRegion);
-    //setFromLoc(dummyData.fromLocs[1]);
+    //get location coordinates
     try {
-      console.log("dataCustomer", dataCustomer);
       let result = await Location.geocodeAsync(
         dataCustomer.firstAddress + "," + dataCustomer?.secondAddress
       );
-      //console.log(result);
       setToLoc({
         latitude: result[0].latitude,
         longitude: result[0].longitude,
@@ -138,11 +136,10 @@ const Map = ({ navigation, route }) => {
     } catch (e) {
       console.log("geo error", e.message);
     }
-    //console.log("AppState.currentState", AppState.currentState);
 
     startForegroundUpdate();
   }, []);
-
+  //remove back button from phone it self
   React.useEffect(() => {
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
@@ -183,9 +180,9 @@ const Map = ({ navigation, route }) => {
       }
     );
   };
+  //this function post the new coordinates to database for live tracking
   const updateLocation = async (liveLocation) => {
     const orderDatas = doc(db, "orders", orderData);
-    console.log("updating location~!!");
     if (firstAccessMap) {
       await updateDoc(orderDatas, {
         workerData: {
@@ -199,10 +196,8 @@ const Map = ({ navigation, route }) => {
       })
         .then(() => {
           setFirstAccessMap(false);
-          console.log("its false now and only one time must be ");
         })
         .catch((error) => {
-          console.log("write delivery details error:", error);
           Alert.alert("خطأ", "خطأ في الخدمة", [{ text: "حسناً" }]);
         });
     } else if (!firstAccessMap) {
@@ -213,7 +208,6 @@ const Map = ({ navigation, route }) => {
       })
         .then(() => {
           setFirstAccessMap(false);
-          console.log("access every time is must");
         })
         .catch((error) => {
           console.log("write delivery details error:", error);
@@ -221,6 +215,7 @@ const Map = ({ navigation, route }) => {
         });
     }
   };
+  //change the order status to done after delivering it to customer
   const makeOrderStatusDone = async () => {
     console.log(dataUser);
     const orderDatas = doc(db, "orders", orderData);
@@ -229,7 +224,6 @@ const Map = ({ navigation, route }) => {
       status: "تم التوصيل",
     })
       .then(async () => {
-        console.log("update worder status to be ready to take orders");
         const orderDataWorker = doc(db, "AdminEmp", dataUser.uid);
         await updateDoc(orderDataWorker, {
           isDelivering: false,
@@ -284,7 +278,7 @@ const Map = ({ navigation, route }) => {
       return;
     }
     stopForegroundUpdate();
-
+//show a notification if the app tracking location on background
     await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
       // For better logs, we set the accuracy to the most sensitive option
       accuracy: Location.Accuracy.BestForNavigation,
@@ -308,7 +302,7 @@ const Map = ({ navigation, route }) => {
       console.log("Location tacking stopped");
     }
   };
-
+//render google map component
   function renderMaps() {
     return (
       <MapView
@@ -390,7 +384,7 @@ const Map = ({ navigation, route }) => {
       </MapView>
     );
   }
-
+//render helping button of the map view 
   function renderHeaderButtons() {
     return (
       <>
@@ -453,7 +447,7 @@ const Map = ({ navigation, route }) => {
       </>
     );
   }
-
+// render delivery info and duration and the customer info
   function renderDeliveryInfo() {
     return (
       <View

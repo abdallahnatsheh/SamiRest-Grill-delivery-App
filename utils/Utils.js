@@ -1,11 +1,12 @@
 import { Linking } from "react-native";
+///here contains function used by components
 
 function isValidEmail(value) {
   const re =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(value).toLowerCase());
 }
-
+// validate email
 function validateEmail(value, setEmailError) {
   if (value == "") {
     setEmailError("");
@@ -15,7 +16,7 @@ function validateEmail(value, setEmailError) {
     setEmailError("البريد الالكتروني غير صالح");
   }
 }
-
+//calculate angle for map marker
 function calculateAngle(coordinates) {
   let startLat = coordinates[0]["latitude"];
   let startLng = coordinates[0]["longitude"];
@@ -26,37 +27,7 @@ function calculateAngle(coordinates) {
 
   return (Math.atan2(dy, dx) * 180) / Math.PI;
 }
-
-//calculate final price
-const handleFinalPrice = (
-  item,
-  foodTypeAddon,
-  foodTypeValue,
-  neededQuantitiy
-) => {
-  let TypeSum = 0;
-  if (foodTypeAddon.length > 0) {
-    foodTypeAddon.map((addon) =>
-      item.price.addons.find((add, i) => {
-        if (add.name === addon.name) {
-          TypeSum += Number(add.value);
-        }
-      })
-    );
-  } else {
-    TypeSum = 0;
-  }
-  let sum =
-    (item.price.types.length > 0
-      ? item.price.types[foodTypeValue].value + TypeSum
-      : item.price.defaultPrice.value + TypeSum) * neededQuantitiy;
-  let finalprice =
-    (item.deals.enabled && !item.deals.dailyDealEnable) ||
-    (item.deals.enabled && item.deals.dailyDealEnable)
-      ? sum - (sum * item.deals.value) / 100
-      : sum;
-  return finalprice.toFixed(2);
-};
+// call a specific number
 function dialCall(number) {
   let phoneNumber = "";
   if (Platform.OS === "android") {
@@ -66,17 +37,12 @@ function dialCall(number) {
   }
   Linking.openURL(phoneNumber);
 }
-const wait = (timeout) => {
-  return new Promise((resolve) => setTimeout(resolve, timeout));
-};
 
 const utils = {
   isValidEmail,
   validateEmail,
   calculateAngle,
-  handleFinalPrice,
   dialCall,
-  wait,
 };
 
 export default utils;
